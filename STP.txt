@@ -1,0 +1,36 @@
+STP 課題
+
+問一　ルートブリッジ選出
+
+	各Switchのブリッジプライオリティ
+		Switch1　32769
+    		  　　2  20481
+		　　　3  4097
+     	　	　　　4  8031
+
+	最もブリッジIDの値が小さいものがルートブリッジとなるため、
+	この冗長構造のルートブリッジは"Switch3"となる。
+
+
+問二　各ポートの役割
+
+※（fast ethernet=100Mbps=コスト19 , ethetnet=10Mbps=コスト100)
+※（例：100Mbpsと10Mbpsでつなげた場合、遅いほうの10Mbpsでの通信になる）
+
+	・ルートポート選出
+	  switch1→RBにコスト的に最も近いのはF0/2　（fastethernetの為、コストは19)
+	  switch2→最も近いのはF0/1　（ethernet+fast=100+19  コストは119)
+	　switch4→最も近いのはE0/2   (ethernet一つの為、コストは100)
+		
+			よってRPは "switch1 F0/2","switch2 F0/1","switch4 E0/2"
+
+	・指定ポート選出
+	　RPと向かい、RPのポートはすべてDPとなる
+	　加えてswitch2と3間のどちらがDPである。この場合、送信元Switchの
+	　ブリッジIDが小さいほうがDPとなる。
+
+			よってDPは"switch1 F0/1","switch3 E0/1とE0/2","switch4 E0/1"
+
+	・ブロッキングポート
+	　
+			選出されなかった残りのポート"switch2 F0/2"がBPとなる。
